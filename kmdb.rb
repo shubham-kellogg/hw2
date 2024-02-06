@@ -247,8 +247,6 @@ role15["character_name"] = "Selina Kyle"
 role15.save
 
 
-
-
 # Prints a header for the movies output
 puts "Movies"
 puts "======"
@@ -256,6 +254,11 @@ puts ""
 
 # Query the movies data and loop through the results to display the movies output.
 # TODO!
+
+Movie.all.each { |movie|
+  studio = Studio.find_by(id: movie.studio_id)
+  puts "#{movie.title} #{movie.year_released} #{movie.rated} #{studio.name}"
+}
 
 # Prints a header for the cast output
 puts ""
@@ -265,3 +268,10 @@ puts ""
 
 # Query the cast data and loop through the results to display the cast output for each movie.
 # TODO!
+
+Movie.all.each { |movie|
+  Role.where(movie_id: movie.id).each { |role|
+    actor = Actor.find_by(id: role.actor_id)
+    puts "#{movie.title} #{actor.name} #{role.character_name}"
+  }
+}
